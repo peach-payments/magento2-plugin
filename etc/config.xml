@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020 Peach Payments. All rights reserved. Developed by Francois Raubenheimer
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+  <default>
+    <payment>
+      <peachpayments_hosted>
+        <active>0</active>
+        <allowspecific>0</allowspecific>
+        <currency>ZAR,KES</currency>
+        <max_order_total>9999999</max_order_total>
+        <min_order_total>1</min_order_total>
+        <payment_action>order</payment_action>
+        <order_status>payment_review</order_status>
+        <transaction_type>payment</transaction_type>
+        <min_order_total>0.01</min_order_total>
+        <sort_order>10</sort_order>
+        <methods>CARD</methods>
+        <send_order_email>1</send_order_email>
+        <send_invoice_email>0</send_invoice_email>
+        <title>Card Ignore</title>
+        <model>PeachPayments\Hosted\Model\Method\Card</model>
+        <debug>1</debug>
+      </peachpayments_hosted>
+      <peachpayments_hosted_card>
+        <active>1</active>
+        <title>Card</title>
+        <model>PeachPayments\Hosted\Model\Method\Card</model>
+      </peachpayments_hosted_card>
+      <peachpayments_hosted_eftsecure>
+        <active>1</active>
+        <title>EFTSecure</title>
+        <model>PeachPayments\Hosted\Model\Method\Eftsecure</model>
+      </peachpayments_hosted_eftsecure>
+      <peachpayments_hosted_masterpass>
+        <active>1</active>
+        <title>MasterPass</title>
+        <model>PeachPayments\Hosted\Model\Method\Masterpass</model>
+      </peachpayments_hosted_masterpass>
+      <peachpayments_hosted_mobicred>
+        <active>1</active>
+        <title>MOBICRED</title>
+        <model>PeachPayments\Hosted\Model\Method\Mobicred</model>
+      </peachpayments_hosted_mobicred>
+      <peachpayments_hosted_mpesa>
+        <active>1</active>
+        <title>M-Pesa</title>
+        <model>PeachPayments\Hosted\Model\Method\Mpesa</model>
+      </peachpayments_hosted_mpesa>
+      <peachpayments_hosted_ozow>
+        <active>1</active>
+        <title>OZOW</title>
+        <model>PeachPayments\Hosted\Model\Method\Ozow</model>
+      </peachpayments_hosted_ozow>
+    </payment>
+  </default>
+</config>

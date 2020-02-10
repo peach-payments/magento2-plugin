@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright (c) 2020 Peach Payments. All rights reserved. Developed by Francois Raubenheimer
+  -->
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    <methods>
+        <method name="peachpayments_hosted_card">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="peachpayments_hosted_eftsecure">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="peachpayments_hosted_masterpass">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="peachpayments_hosted_mobicred">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="peachpayments_hosted_mpesa">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+        <method name="peachpayments_hosted_ozow">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
+    </methods>
+</payment>

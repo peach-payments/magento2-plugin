@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020 Peach Payments. All rights reserved. Developed by Francois Raubenheimer
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+  <router id="standard">
+    <route id="peachpayments_hosted" frontName="pp-hosted">
+      <module name="PeachPayments_Hosted"/>
+    </route>
+  </router>
+</config>

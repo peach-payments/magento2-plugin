@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020 Peach Payments. All rights reserved. Developed by Francois Raubenheimer
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <resource>PeachPayments_Hosted::system_config</resource>
+            <group id="peachpayments_hosted" sortOrder="99" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Peach Payments - Hosted All-in-One payment solution for emerging African markets.</label>
+                <comment>
+                    &lt;img src="https://peachpayments.s3.eu-west-1.amazonaws.com/logo.svg" style="width:200px"/&gt;
+                    &lt;br /&gt;
+                    If you require assistance with configurations, please contact your account manager at &lt;a style="text-decoration:none" href="tel:+27212005877"&gt;+27-21-2005877&lt;/a&gt; or &lt;a style="text-decoration:none" href="mailto:support@peachpayments.com"&gt;support@peachpayments.com&lt;/a&gt;
+                </comment>
+                <field id="active" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="mode" sortOrder="15" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <source_model>PeachPayments\Hosted\Model\System\Config\Source\Mode</source_model>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                    </depends>
+                </field>
+                <field id="entity_id" sortOrder="23" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Entity ID</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/mode">1</field>
+                    </depends>
+                </field>
+                <field id="sign_key" sortOrder="24" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Token</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/mode">1</field>
+                    </depends>
+                </field>
+                <field id="entity_id_sandbox" sortOrder="23" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Entity ID (Sandbox)</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/mode">0</field>
+                    </depends>
+                </field>
+                <field id="sign_key_sandbox" sortOrder="24" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Token (Sandbox)</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/mode">0</field>
+                    </depends>
+                </field>
+                <field id="methods" translate="label comment" sortOrder="26" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Methods</label>
+                    <comment>Displayable payment methods</comment>
+                    <source_model>PeachPayments\Hosted\Model\System\Config\Source\Method</source_model>
+                    <validate>validate-select required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                    </depends>
+                </field>
+                <field id="advanced" sortOrder="28" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Advanced</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                    </depends>
+                </field>
+                <field id="currency" translate="label comment" sortOrder="30" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allowed Currencies</label>
+                    <comment>Allowed currencies for this payment method.</comment>
+                    <!--<source_model>PeachPayments\Hosted\Model\System\Config\Source\Currency</source_model>-->
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <validate>validate-select required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="allowspecific" translate="label" sortOrder="50" type="allowspecific" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="specificcountry" translate="label" sortOrder="51" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="min_order_total" translate="label" sortOrder="90" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Min order total</label>
+                    <validate>validate-number validate-greater-than-zero required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="max_order_total" translate="label" sortOrder="100" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max order total</label>
+                    <validate>validate-number validate-greater-than-zero required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="sort_order" translate="label" sortOrder="110" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                    <validate>validate-number validate-greater-than-zero required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="send_order_email" sortOrder="121" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Order Email</label>
+                    <comment>Send the order email after a successful confirmed payment.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                    </depends>
+                </field>
+                <field id="send_invoice_email" sortOrder="122" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Invoice Email</label>
+                    <comment>Send invoice email after creating the invoice successfully.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                    </depends>
+                </field>
+                <field id="title_card" translate="label comment" sortOrder="200" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Card Title</label>
+                    <comment>Title that displays on the checkout page for the CARD method if displayed.</comment>
+                    <config_path>payment/peachpayments_hosted_card/title</config_path>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="title_eftsecure" translate="label comment" sortOrder="210" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>EFTSecure Title</label>
+                    <comment>Title that displays on the checkout page for the EFTSECURE method if displayed.</comment>
+                    <config_path>payment/peachpayments_hosted_eftsecure/title</config_path>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="title_masterpass" translate="label comment" sortOrder="220" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>MasterPass Title</label>
+                    <comment>Title that displays on the checkout page for the MASTERPASS method if displayed.</comment>
+                    <config_path>payment/peachpayments_hosted_masterpass/title</config_path>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="title_mobicred" translate="label comment" sortOrder="230" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>MOBICRED Title</label>
+                    <comment>Title that displays on the checkout page for the MOBICRED method if displayed.</comment>
+                    <config_path>payment/peachpayments_hosted_mobicred/title</config_path>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="title_mpesa" translate="label comment" sortOrder="240" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>M-Pesa Title</label>
+                    <comment>Title that displays on the checkout page for the MPESA method if displayed.</comment>
+                    <config_path>payment/peachpayments_hosted_mpesa/title</config_path>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+                <field id="title_ozow" translate="label comment" sortOrder="250" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>OZOW Title</label>
+                    <comment>Title that displays on the checkout page for the OZOW method if displayed.</comment>
+                    <config_path>payment/peachpayments_hosted_ozow/title</config_path>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/peachpayments_hosted/active">1</field>
+                        <field id="*/peachpayments_hosted/advanced">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

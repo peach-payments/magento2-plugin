@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020 Peach Payments. All rights reserved. Developed by Francois Raubenheimer
+  -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="peachpayments_hosted_web_hooks" resource="default" engine="innodb" comment="PeachPayments Hosted table">
+        <column xsi:type="int" name="entity_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Identifier"/>
+        <column xsi:type="decimal" name="amount" scale="6" precision="20" unsigned="false" nullable="false" default="0" comment="Amount payable"/>
+        <column xsi:type="varchar" name="currency" nullable="false" length="3" comment="Currency"/>
+        <column xsi:type="varchar" name="checkout_id" nullable="false" length="32" comment="Checkout identifier"/>
+        <column xsi:type="varchar" name="peach_id" nullable="false" length="32" comment="Peach Identifier"/>
+        <column xsi:type="int" name="order_id" nullable="false" padding="11" comment="Order identifier"/>
+        <column xsi:type="varchar" name="order_increment_id" nullable="false" length="50" comment="Order increment identifier"/>
+        <column xsi:type="varchar" name="merchant_name" nullable="true" length="120" comment="Merchant name"/>
+        <column xsi:type="varchar" name="merchant_transaction_id" nullable="true" length="255" comment="Merchant transaction id"/>
+        <column xsi:type="varchar" name="payment_brand" nullable="true" length="32" comment="Payment brand"/>
+        <column xsi:type="varchar" name="payment_type" nullable="true" length="8" comment="Payment type"/>
+        <column xsi:type="varchar" name="result_code" nullable="true" length="12" comment="Result Code"/>
+        <column xsi:type="varchar" name="result_description" nullable="true" length="255" comment="Result Description"/>
+        <column xsi:type="varchar" name="signature" nullable="true" length="64" comment="Signature"/>
+        <column xsi:type="timestamp" name="timestamp" on_update="false" nullable="false" comment="Timestamp from peach"/>
+        <column xsi:type="blob" name="request" comment="Full Request"/>
+        <column xsi:type="timestamp" name="created_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

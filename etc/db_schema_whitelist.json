@@ -1,0 +1,49 @@
+{
+    "peach_payments_hosted_web_hooks": {
+        "column": {
+            "entity_id": true,
+            "amount": true,
+            "currency": true,
+            "checkout_id": true,
+            "peach_id": true,
+            "order_id": true,
+            "order_increment_id": true,
+            "merchant_name": true,
+            "merchant_transaction_id": true,
+            "payment_brand": true,
+            "payment_type": true,
+            "result_code": true,
+            "result_description": true,
+            "signature": true,
+            "timestamp": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "peachpayments_hosted_web_hooks": {
+        "column": {
+            "entity_id": true,
+            "amount": true,
+            "currency": true,
+            "checkout_id": true,
+            "peach_id": true,
+            "order_id": true,
+            "order_increment_id": true,
+            "merchant_name": true,
+            "merchant_transaction_id": true,
+            "payment_brand": true,
+            "payment_type": true,
+            "result_code": true,
+            "result_description": true,
+            "signature": true,
+            "timestamp": true,
+            "created_at": true,
+            "request": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
