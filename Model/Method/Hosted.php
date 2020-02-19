@@ -8,6 +8,7 @@
  */
 namespace PeachPayments\Hosted\Model\Method;
 
+use Exception;
 use Magento\Directory\Helper\Data as DirectoryHelperData;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
@@ -96,7 +97,7 @@ abstract class Hosted extends AbstractMethod
     /**
      * @var string
      */
-    protected $_infoBlockType = \PeachPayments\Hosted\Block\Info::class;
+    protected $_infoBlockType = 'PeachPayments\Hosted\Block\Info';
 
     /**
      * Method that will be executed instead of authorize or capture
@@ -155,6 +156,7 @@ abstract class Hosted extends AbstractMethod
      * @param float $amount
      * @return $this
      * @throws Zend_Http_Client_Exception
+     * @throws Exception
      */
     public function refund(InfoInterface $payment, $amount)
     {

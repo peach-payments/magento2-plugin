@@ -8,29 +8,27 @@
  */
 namespace PeachPayments\Hosted\Block;
 
-
-use Magento\Payment\Block\Info as CoreInfo;
+use Magento\Framework\View\Element\Template\Context;
 
 /**
  * Class Info
  * @package PeachPayments\Hosted\Block
  */
-class Info extends CoreInfo
+class Info extends \Magento\Payment\Block\Info
 {
+
+    /**
+     * Info constructor.
+     * @param Context $context
+     * @param array $data
+     */
+    public function __construct(Context $context, array $data = []) {
+
+        parent::__construct($context, $data);
+    }
+
     /**
      * @var string
      */
-    protected $_template = 'Magento_Payment::info/default.phtml';
-
-    /**
-     * Render as PDF
-     * @return string
-     */
-    public function toPdf()
-    {
-        $this->setTemplate('Magento_Payment::info/pdf/default.phtml');
-        return $this->toHtml();
-    }
+    protected $_template = 'PeachPayments_Hosted::info/default.phtml';
 }
-
-

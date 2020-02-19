@@ -5,8 +5,4 @@
 
 use Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(
-    ComponentRegistrar::MODULE,
-    'PeachPayments_Hosted',
-    __DIR__
-);
+ComponentRegistrar::register(ComponentRegistrar::MODULE, 'PeachPayments_Hosted', __DIR__);

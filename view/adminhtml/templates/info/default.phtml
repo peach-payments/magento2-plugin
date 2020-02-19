@@ -1,0 +1,60 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \PeachPayments\Hosted\Block\Info $block
+ * @see \PeachPayments\Hosted\Block\Info
+ */
+$specificInfo = $block->getSpecificInformation();
+?>
+<?= $block->escapeHtml($block->getMethod()->getTitle()) ?>
+
+<?php $peachRequest = $this->getInfo()->getAdditionalInformation('peach_request'); ?>
+<?php if($peachRequest && $peachData = unserialize($peachRequest)): ?>
+    <?php /* Lets a ssume cards only */ if(array_key_exists('card_bin', $peachData)): ?>
+    <table class="data-table admin__table-secondary">
+        <tr>
+            <th>
+                <?= /* @noEscape */ $block->escapeHtml(__('Card Holder')) ?>
+            </th>
+            <td>
+                <?= /* @noEscape */ $block->escapeHtml($peachData['card_holder'])?>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <?= /* @noEscape */ $block->escapeHtml($peachData['payment_brand']) ?>
+            </th>
+            <td>
+                <?= /* @noEscape */ $block->escapeHtml(sprintf('%d******%d', $peachData['card_bin'], $peachData['card_last4_digits']))?>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <?= /* @noEscape */ $block->escapeHtml(__('Expire')) ?>
+            </th>
+            <td>
+                <?= /* @noEscape */ $block->escapeHtml(sprintf('%d/%d', $peachData['card_expiry_month'], $peachData['card_expiry_year']))?>
+            </td>
+        </tr>
+    </table>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($specificInfo) : ?>
+    <table class="data-table admin__table-secondary">
+        <?php foreach ($specificInfo as $label => $value) : ?>
+            <tr>
+                <th><?= $block->escapeHtml($label) ?>:</th>
+                <td>
+                    <?= /* @noEscape */ nl2br($block->escapeHtml(implode("\n", $block->getValueAsArray($value, true)))) ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php endif;?>
+
+<?= $block->getChildHtml() ?>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright (c) 2020 Silvertree Internet Holdings. All rights reserved.
+ */
+
+/**
+ * @see \PeachPayments\Hosted\Block\Info
+ * @var \PeachPayments\Hosted\Block\Info $block
+ */
+?>
+<?= $block->escapeHtml($block->getMethod()->getTitle()) ?>{{pdf_row_separator}}
+<?php $peachRequest = $this->getInfo()->getAdditionalInformation('peach_request'); ?>
+<?php if($peachRequest && $peachData = unserialize($peachRequest)): ?>
+    <?php /* Lets assume cards only */ if(array_key_exists('card_bin', $peachData)): ?>
+        <?= $block->escapeHtml(__('Card Holder')) ?>:
+        <?= $block->escapeHtml($peachData['card_holder'])?>{{pdf_row_separator}}
+        <?= $block->escapeHtml($peachData['payment_brand']) ?>:
+        <?= $block->escapeHtml(sprintf('%d******%d', $peachData['card_bin'], $peachData['card_last4_digits']))?>{{pdf_row_separator}}
+        <?= $block->escapeHtml(__('Expire')) ?>:
+        <?= $block->escapeHtml(sprintf('%d/%d', $peachData['card_expiry_month'], $peachData['card_expiry_year']))?>{{pdf_row_separator}}
+    <?php endif;?>
+<?php endif;?>
+<?php if ($specificInfo = $block->getSpecificInformation()) : ?>
+    <?php foreach ($specificInfo as $label => $value) : ?>
+        <?= $block->escapeHtml($label) ?>:
+        <?= $block->escapeHtml(implode(' ', $block->getValueAsArray($value))) ?>
+        {{pdf_row_separator}}
+    <?php endforeach; ?>
+<?php endif;?>
+
+<?= $block->escapeHtml(implode('{{pdf_row_separator}}', $block->getChildPdfAsArray())) ?>
