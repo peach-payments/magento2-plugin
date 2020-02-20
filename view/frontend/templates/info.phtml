@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2020 Silvertree Internet Holdings. All rights reserved.
+ * Copyright (c) 2020 Peach Payments. All rights reserved. Developed by Francois Raubenheimer
  */
 
 /**
@@ -10,7 +10,6 @@
 $specificInfo = $block->getSpecificInformation();
 $title = $block->escapeHtml($block->getMethod()->getTitle());
 ?>
-TEST
 <dl class="payment-method">
     <dt class="title"><?= /* @noEscape */ $title ?></dt>
     <?php if ($specificInfo) : ?>
