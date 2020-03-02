@@ -79,7 +79,7 @@ abstract class AbstractSecure extends Action
      */
     protected function isSuccessful($resultCode)
     {
-        return $resultCode === '000.000.000' || $resultCode === '000.100.110' ? true : false;
+        return $resultCode === '000.000.000' || $resultCode === '000.100.110' || $resultCode === '000.100.111' || $resultCode === '000.100.112' ? true : false;
     }
 
     /**

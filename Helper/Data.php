@@ -360,7 +360,7 @@ class Data extends AbstractHelper
         /** @var Payment $payment */
         $payment = $order->getPayment();
 
-        if (($resultCode === '000.000.000' || $resultCode === '000.100.110')
+        if (($resultCode === '000.000.000' || $resultCode === '000.100.110' || $resultCode === '000.100.111' || $resultCode === '000.100.112')
             && $order instanceof Order
             && $payment instanceof Payment
         ) {
