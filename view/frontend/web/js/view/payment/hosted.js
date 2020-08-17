@@ -14,7 +14,7 @@ define(
       'card',
       'eftsecure',
       'masterpass',
-      'masterpass',
+      'mobicred',
       'mpesa',
       'ozow',
     ];
