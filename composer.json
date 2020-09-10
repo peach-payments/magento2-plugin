@@ -2,7 +2,7 @@
     "name": "peachpayments/magento2-plugin",
     "description": "PeachPayments Hosted Magento 2 module, all-in-one payment solution for emerging African markets.",
     "require": {
-        "php": "~7.1.3||~7.2.0||~7.3.0",
+        "php": "~7.1.3||~7.2.0||~7.3.0||~7.4.0",
         "ext-json": "*"
     },
     "type": "magento2-module",
