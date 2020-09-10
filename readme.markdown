@@ -27,7 +27,7 @@ All-in-One payment solution for emerging African markets.
 
         ```sh
         $ php bin/magento setup:static-content:deploy
-        ```    
+        ```
 
 ## Configuration
 
@@ -36,3 +36,7 @@ All-in-One payment solution for emerging African markets.
   go to  ```System``` -> ```Cache Management``` and clear Magento Cache by clicking on ```Flush Magento Cache```
   * Go back to ```Payment Methods``` and click the button ```Configure``` under the payment method ```Peach Payments``` to expand the available settings
   * Set ```Enabled``` to ```Yes```, set the correct credentials, select your preferred settings and click ```Save config```
+
+## PHP Compatiblity
+
+Currently this module only support these PHP versions: +`7.1.3`, `7.2`, `7.3` and `7.4`
