@@ -15,6 +15,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Framework\UrlInterface;
@@ -64,6 +65,11 @@ class Data extends AbstractHelper
     private $httpClientFactory;
 
     /**
+     * @var EventManager
+     */
+    private $eventManager;
+
+    /**
      * Data constructor.
      * @param Context $context
      * @param ScopeConfigInterface $storeConfig
@@ -82,7 +88,8 @@ class Data extends AbstractHelper
         LoggerInterface $logLoggerInterface,
         OrderFactory $modelOrderFactory,
         QuoteFactory $modelQuoteFactory,
-        ZendClientFactory $httpClientFactory)
+        ZendClientFactory $httpClientFactory,
+        EventManager $eventManager)
     {
         $this->storeConfig = $storeConfig;
         $this->appRequestInterface = $appRequestInterface;
@@ -91,6 +98,7 @@ class Data extends AbstractHelper
         $this->modelOrderFactory = $modelOrderFactory;
         $this->modelQuoteFactory = $modelQuoteFactory;
         $this->httpClientFactory = $httpClientFactory;
+        $this->eventManager = $eventManager;
 
         parent::__construct($context);
 
@@ -420,9 +428,11 @@ class Data extends AbstractHelper
                     ->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_PROCESSING))
                     ->addStatusHistoryComment(__('Approved payment online at PeachPayments.'));
 
+
                 $order->save();
 
-
+                // dispatch event to say order succeeded
+                $this->eventManager->dispatch('peachpayments_order_succeed', ['result' => $result]);
             } catch (Exception $e) {
                 $this->logLoggerInterface->error($e);
             }
@@ -438,6 +448,9 @@ class Data extends AbstractHelper
                 $this->logLoggerInterface->error($e);
             }
         }
+
+        // dispatch event to say order failed
+        $this->eventManager->dispatch('peachpayments_order_failed', ['result' => $result]);
         return false;
     }
 
