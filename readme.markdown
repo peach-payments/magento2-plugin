@@ -40,3 +40,7 @@ All-in-One payment solution for emerging African markets.
 ## PHP Compatiblity
 
 Currently this module only support these PHP versions: +`7.1.3`, `7.2`, `7.3` and `7.4`
+
+## Events
+
+There are two events available for usage to supplement your 3rd party tracking. On order success you can use `peachpayments_order_succeed`, on order failure use `peachpayments_order_failed`. Both events will have a data object as: `result`. Please take special care to prevent duplicates in your observer. These events will be dispatched on both the customer facing and webhook controllers.
