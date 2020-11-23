@@ -39,7 +39,7 @@ All-in-One payment solution for emerging African markets.
 
 ## PHP Compatibility
 
-Module only support these PHP versions: `7.3` and `7.4` (PHP 7.1 and 7.2 has been depreciated, please use version )
+Module only support these PHP versions: `7.3` and `7.4` (PHP 7.1 and 7.2 has been depreciated, please use version 1.0.7, this excludes GraphQL)
 
 ## Events
 
