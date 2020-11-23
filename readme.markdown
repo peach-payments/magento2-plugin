@@ -88,7 +88,7 @@ mutation placeOrder($cartId: String!) {
 query getPeachHostedRedirectUrl($cartId: String!){
   getPeachHostedRedirectUrl(input: {
     cart_id: $cartId,
-    return_url: "payment/welcome-back.html"
+    return_url: "https://my.app.pwa/payment/welcome-back.html"
   }) {
     form_data
     form_link
