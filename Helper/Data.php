@@ -216,7 +216,7 @@ class Data extends AbstractHelper
             'amount' => $amount,
             'paymentType' => 'RF',
             'currency' => $currency,
-            'id' => $id
+            'id' => $id,
         ];
 
         $client->setParameterPost($this->signData($params, false));
@@ -411,7 +411,7 @@ class Data extends AbstractHelper
 
                 if ($this->getConfig('send_invoice_email', true)) {
                     foreach ($order->getInvoiceCollection() as $invoice) {
-                        if($invoice && !$invoice->getEmailSent()){
+                        if ($invoice && !$invoice->getEmailSent()) {
 
                             $invoiceSender = ObjectManager::getInstance()->get('Magento\Sales\Model\Order\Email\Sender\InvoiceSender');
                             $invoiceSender->send($invoice);

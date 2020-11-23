@@ -1,0 +1,22 @@
+type Query {
+    getPeachHostedRedirectUrl(input: PeachHostedRedirectUrlInput!): PeachHostedRedirectUrl @resolver(class: "\\PeachPayments\\Hosted\\Model\\Resolver\\PeachHostedRedirectUrl") @doc(description:"Get PeachPayments Redirect data & url")
+    getPeachHostedOrderStatus(input: PeachHostedOrderStatusInput!): PeachHostedOrderStatus @resolver(class: "\\PeachPayments\\Hosted\\Model\\Resolver\\PeachHostedOrderStatus") @doc(description:"Get PeachPayments order status after customer returned from checkout")
+}
+
+input PeachHostedRedirectUrlInput @doc(description: "The required input to request the secure URL for Peach Payments redirect payment method.") {
+    cart_id: String! @doc(description: "The unique ID that identifies the customer's cart")
+    return_url: String! @doc(description: "The url you want peach to return to after payment success or failure ")
+}
+
+input PeachHostedOrderStatusInput @doc(description: "The required input to get the status of an order") {
+    order_id: String! @doc(description: "The unique ID that identifies the customer's order as provided to Peach Payments as merchantTransactionId")
+}
+
+type PeachHostedRedirectUrl {
+    form_link: String @doc(description: "Url to go to Peach Payments")
+    form_data: String @doc(description: "Data that needs to be included for the redirect to work, this will be provided as an string of json type")
+}
+
+type PeachHostedOrderStatus {
+    status: Int @doc(description: "Status code to determine the order status, 1 = success, 2 = failure, 3 = is wait and retry")
+}

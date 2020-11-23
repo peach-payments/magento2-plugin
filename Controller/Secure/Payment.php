@@ -21,10 +21,12 @@ class Payment extends AbstractSecure implements CsrfAwareActionInterface
      */
     protected $helperData;
 
-    public function __construct(Context $context,
+    public function __construct(
+        Context $context,
         HooksFactory $webHooksFactory,
         LayoutFactory $viewLayoutFactory,
-        HelperData $helperData)
+        HelperData $helperData
+    )
     {
         $this->helperData = $helperData;
 
@@ -65,7 +67,7 @@ class Payment extends AbstractSecure implements CsrfAwareActionInterface
                 return;
             }
 
-            if($this->isWaiting($webHookM->getData('result_code'))) {
+            if ($this->isWaiting($webHookM->getData('result_code'))) {
                 $this->_redirect('*/*/wait', ['real_order_id' => $incrementId]);
                 return;
             }

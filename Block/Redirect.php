@@ -9,6 +9,7 @@
  * @method getOrderId
  * @method getOrderIncrementId
  */
+
 namespace PeachPayments\Hosted\Block;
 
 use Exception;
@@ -31,7 +32,8 @@ class Redirect extends Template
      */
     private $remoteAddress;
 
-    public function __construct(Context $context,
+    public function __construct(
+        Context $context,
         HelperData $helperData,
         RemoteAddress $remoteAddress,
         array $data = []
@@ -83,9 +85,8 @@ class Redirect extends Template
     {
         /** @var Order $order */
         $order = $this->getOrder();
-        /** @var HelperData $helper */
         $helper = $this->helperData;
-        /** @var int $amount */
+        /** @var float $amount */
         $amount = number_format(
             $order->getPayment()->getAmountOrdered(),
             2,
@@ -105,12 +106,12 @@ class Redirect extends Template
         $billingStreetOne = '';
         $billingStreetTwo = 'N/A';
 
-        if(!empty($billingStreet)) {
-            if(array_key_exists(0, $billingStreet)){
+        if (!empty($billingStreet)) {
+            if (array_key_exists(0, $billingStreet)) {
                 $billingStreetOne = $billingStreet[0];
             }
 
-            if(array_key_exists(1, $billingStreet)){
+            if (array_key_exists(1, $billingStreet)) {
                 $billingStreetTwo = $billingStreet[1];
             }
         }
@@ -119,17 +120,15 @@ class Redirect extends Template
         $shippingStreetOne = '';
         $shippingStreetTwo = 'N/A';
 
-        if(!empty($shippingStreet)) {
-            if(array_key_exists(0, $shippingStreet)){
+        if (!empty($shippingStreet)) {
+            if (array_key_exists(0, $shippingStreet)) {
                 $shippingStreetOne = $shippingStreet[0];
             }
 
-            if(array_key_exists(1, $shippingStreet)){
+            if (array_key_exists(1, $shippingStreet)) {
                 $shippingStreetTwo = $shippingStreet[1];
             }
         }
-
-
 
         return [
             'authentication.entityId' => $helper->getEntityId(),
@@ -145,7 +144,7 @@ class Redirect extends Template
             'customer.surname' => $order->getBillingAddress()->getLastname(),
             'customer.mobile' => $order->getBillingAddress()->getTelephone(),
             'customer.email' => $order->getBillingAddress()->getEmail(),
-            'customer.status'=> $order->getCustomerIsGuest() ? 'EXISTING' : 'NEW',
+            'customer.status' => $order->getCustomerIsGuest() ? 'NEW' : 'EXISTING',
             'customer.ip' => $this->remoteAddress->getRemoteAddress(),
 
             'billing.street1' => $billingStreetOne,
