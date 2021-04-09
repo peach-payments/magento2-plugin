@@ -37,7 +37,8 @@ class Redirect extends Template
         HelperData $helperData,
         RemoteAddress $remoteAddress,
         array $data = []
-    ) {
+    )
+    {
         $this->helperData = $helperData;
         $this->remoteAddress = $remoteAddress;
         parent::__construct($context, $data);
@@ -116,21 +117,38 @@ class Redirect extends Template
             }
         }
 
-        $shippingStreet = $order->getShippingAddress()->getStreet();
-        $shippingStreetOne = '';
-        $shippingStreetTwo = 'N/A';
+        $shippingDetails = [];
 
-        if (!empty($shippingStreet)) {
-            if (array_key_exists(0, $shippingStreet)) {
-                $shippingStreetOne = $shippingStreet[0];
+        // @note exclude shipping address on virtual products
+        if ($order->getShippingAddress()) {
+
+            $shippingStreet = $order->getShippingAddress()->getStreet();
+            $shippingCity = $order->getShippingAddress()->getCity();
+            $shippingCountry = $order->getShippingAddress()->getCountryId();
+
+            $shippingStreetOne = '';
+            $shippingStreetTwo = 'N/A';
+
+            if (!empty($shippingStreet)) {
+                if (array_key_exists(0, $shippingStreet)) {
+                    $shippingStreetOne = $shippingStreet[0];
+                }
+
+                if (array_key_exists(1, $shippingStreet)) {
+                    $shippingStreetTwo = $shippingStreet[1];
+                }
             }
 
-            if (array_key_exists(1, $shippingStreet)) {
-                $shippingStreetTwo = $shippingStreet[1];
-            }
+            $shippingDetails = [
+                'shipping.street1' => $shippingStreetOne,
+                'shipping.street2' => $shippingStreetTwo,
+                'shipping.city' => $shippingCity,
+                'shipping.country' => $shippingCountry,
+            ];
         }
 
-        return [
+
+        return array_merge([
             'authentication.entityId' => $helper->getEntityId(),
             'amount' => $amount,
             'paymentType' => 'DB',
@@ -151,11 +169,6 @@ class Redirect extends Template
             'billing.street2' => $billingStreetTwo,
             'billing.city' => $order->getBillingAddress()->getCity(),
             'billing.country' => $order->getBillingAddress()->getCountryId(),
-
-            'shipping.street1' => $shippingStreetOne,
-            'shipping.street2' => $shippingStreetTwo,
-            'shipping.city' => $order->getShippingAddress()->getCity(),
-            'shipping.country' => $order->getShippingAddress()->getCountryId(),
-        ];
+        ], $shippingDetails);
     }
 }
