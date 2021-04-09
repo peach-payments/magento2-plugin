@@ -50,7 +50,8 @@ class PeachHostedRedirectUrl implements ResolverInterface
         CollectionFactoryInterface $orderCollectionFactory,
         Helper $helper,
         HooksFactory $webHooksFactory
-    ) {
+    )
+    {
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
         $this->orderCollectionFactory = $orderCollectionFactory;
         $this->helper = $helper;
@@ -130,17 +131,34 @@ class PeachHostedRedirectUrl implements ResolverInterface
             }
         }
 
-        $shippingStreet = $order->getShippingAddress()->getStreet();
-        $shippingStreetOne = '';
-        $shippingStreetTwo = 'N/A';
 
-        if (!empty($shippingStreet)) {
-            if (array_key_exists(0, $shippingStreet)) {
-                $shippingStreetOne = $shippingStreet[0];
+        $shippingDetails = [];
+
+        // @note exclude shipping address on virtual products
+        if ($order->getShippingAddress()) {
+            $shippingStreet = $order->getShippingAddress()->getStreet();
+            $shippingCity = $order->getShippingAddress()->getCity();
+            $shippingCountry = $order->getShippingAddress()->getCountryId();
+
+            $shippingStreetOne = '';
+            $shippingStreetTwo = 'N/A';
+
+            if (!empty($shippingStreet)) {
+                if (array_key_exists(0, $shippingStreet)) {
+                    $shippingStreetOne = $shippingStreet[0];
+                }
+
+                if (array_key_exists(1, $shippingStreet)) {
+                    $shippingStreetTwo = $shippingStreet[1];
+                }
             }
-            if (array_key_exists(1, $shippingStreet)) {
-                $shippingStreetTwo = $shippingStreet[1];
-            }
+
+            $shippingDetails = [
+                'shipping.street1' => $shippingStreetOne,
+                'shipping.street2' => $shippingStreetTwo,
+                'shipping.city' => $shippingCity,
+                'shipping.country' => $shippingCountry,
+            ];
         }
 
         // setup webhook and insert tracking incremental ids
@@ -162,7 +180,7 @@ class PeachHostedRedirectUrl implements ResolverInterface
         $webHook->save();
 
         try {
-            return [
+            return array_merge([
                 'authentication.entityId' => $helper->getEntityId(),
                 'amount' => $amount,
                 'paymentType' => 'DB',
@@ -183,11 +201,7 @@ class PeachHostedRedirectUrl implements ResolverInterface
                 'billing.city' => $order->getBillingAddress()->getCity(),
                 'billing.country' => $order->getBillingAddress()->getCountryId(),
 
-                'shipping.street1' => $shippingStreetOne,
-                'shipping.street2' => $shippingStreetTwo,
-                'shipping.city' => $order->getShippingAddress()->getCity(),
-                'shipping.country' => $order->getShippingAddress()->getCountryId(),
-            ];
+            ], $shippingDetails);
 
         } catch (\Exception $e) {
             throw new GraphQlInputException(__($e->getMessage()));
